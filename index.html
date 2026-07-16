@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数字選択式 攻略研究所｜ロト6・ロト7 予測＆仮説検証システム</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700;800&family=Zen+Kaku+Gothic+New:wght@400;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div>
+    <p class="kicker">LOTO ANALYSIS LABORATORY</p>
+    <h1>数字選択式 <span class="accent">攻略研究所</span></h1>
+  </div>
+  <div class="edition">
+    四法則統合予測システム<br>
+    宝田法則 × 数学理論 × 占星術 × Claude統計則<br>
+    毎週のCSV投入だけで予想と検証レポートを自動発行
+  </div>
+</header>
+
+<nav class="tabs" aria-label="くじ種別タブ">
+  <button class="tab-btn active" data-tab="loto6">ロト6</button>
+  <button class="tab-btn" data-tab="loto7">ロト7</button>
+  <button class="tab-btn" data-tab="rules">法則書庫</button>
+</nav>
+
+<main class="sheet">
+
+  <!-- ============ ロト6 ============ -->
+  <section id="panel-loto6" class="tab-panel panel-loto6 active">
+    <h2 class="section-title">最新CSVを投入 <small>みずほ銀行形式（開催回・日付・第1〜第6数字…）／Shift-JIS・UTF-8自動判別</small></h2>
+    <div id="dz-loto6" class="dropzone" role="button" tabindex="0" aria-label="ロト6のCSVファイルを選択またはドロップ">
+      <p class="dz-title">ここにロト6の履歴CSVをドロップ（クリックで選択）</p>
+      <p class="dz-sub">最新の抽選結果を追記したCSVを毎週投入するだけで、予想2口とレポートを自動生成します</p>
+      <input type="file" id="file-loto6" accept=".csv,text/csv">
+    </div>
+    <p id="status-loto6" class="file-status"></p>
+    <div id="err-loto6" class="error-box" role="alert"></div>
+    <div class="disclaimer">本システムが表示する％はすべて「過去データにおけるパターン出現頻度」です。抽選は毎回独立であり、<strong>どの組み合わせも当選確率は同一</strong>（ロト6：1/6,096,454）。娯楽としてお楽しみください。</div>
+    <div id="report-loto6" class="hidden"></div>
+  </section>
+
+  <!-- ============ ロト7 ============ -->
+  <section id="panel-loto7" class="tab-panel panel-loto7">
+    <h2 class="section-title">最新CSVを投入 <small>みずほ銀行形式（開催回・日付・第1〜第7数字…）／Shift-JIS・UTF-8自動判別</small></h2>
+    <div id="dz-loto7" class="dropzone" role="button" tabindex="0" aria-label="ロト7のCSVファイルを選択またはドロップ">
+      <p class="dz-title">ここにロト7の履歴CSVをドロップ（クリックで選択）</p>
+      <p class="dz-sub">列構成（第7数字の有無）から自動でロト6／ロト7を判別します。間違ったタブに入れても自動で切り替わります</p>
+      <input type="file" id="file-loto7" accept=".csv,text/csv">
+    </div>
+    <p id="status-loto7" class="file-status"></p>
+    <div id="err-loto7" class="error-box" role="alert"></div>
+    <div class="disclaimer">本システムが表示する％はすべて「過去データにおけるパターン出現頻度」です。抽選は毎回独立であり、<strong>どの組み合わせも当選確率は同一</strong>（ロト7：1/10,295,472）。娯楽としてお楽しみください。</div>
+    <div id="report-loto7" class="hidden"></div>
+  </section>
+
+  <!-- ============ 法則書庫 ============ -->
+  <section id="panel-rules" class="tab-panel">
+    <h2 class="section-title">四法則テキスト全文 <small>本システムが「絶対的なルール」として参照する原典。rules/ ディレクトリの .txt と同内容</small></h2>
+    <div id="rulebooks"></div>
+    <div class="disclaimer">④のClaude統計法則には「個別数字の偏りは統計的に存在しない（カイ二乗検定）」という解析結論そのものが含まれています。これは他の法則の限界を示す検証結果でもあり、本システムはこの正直な統計的事実の上に、構成型（パターン）ベースの買い目設計を行っています。</div>
+  </section>
+
+</main>
+
+<footer>
+  数字選択式 攻略研究所 ─ すべての計算はお使いのブラウザ内で完結します（CSVは外部送信されません）。<br>
+  占星術指標は近似暦（月齢：朔望周期／水星逆行：2024〜2027年近似テーブル）による決定論計算です。<br>
+  ギャンブルは計画的に。のめり込みに注意しましょう。
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="assets/rules.js"></script>
+<script src="assets/engine.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

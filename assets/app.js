@@ -62,6 +62,27 @@
     catch (e) { return new TextDecoder("shift_jis").decode(buf); }
   }
 
+  /* ---------------- 自動更新CSVの読み込み（GitHub Actions連携） ----------------
+     data/loto6_history.csv と data/loto7_history.csv を、ページを開いた瞬間に
+     fetch で取得して自動実行する。ファイルがまだ存在しない場合や取得失敗時は
+     何もせず、従来通り手動ドロップでの利用に自然にフォールバックする。 */
+  ["loto6", "loto7"].forEach(game => {
+    if (typeof fetch !== "function") return; // fetch非対応環境では何もしない
+    const path = "data/" + game + "_history.csv?_=" + Date.now(); // キャッシュ回避
+    fetch(path, { cache: "no-store" })
+      .then(res => { if (!res.ok) throw new Error("no auto data"); return res.arrayBuffer(); })
+      .then(buf => {
+        const text = decodeSmart(buf);
+        const parsed = E.parseCSVText(text);
+        $("#status-" + game).textContent =
+          "✔ 自動更新データを読込 ─ " + E.GAME[game].label + " 全" + parsed.draws.length + "回分（第" +
+          parsed.draws[0].round + "回〜第" + parsed.draws[parsed.draws.length - 1].round +
+          "回）。毎日自動チェックされた最新データです。手動でCSVを投入すればこちらを上書きできます。";
+        runPrediction(game, parsed.draws);
+      })
+      .catch(() => { /* 自動データ未設置・取得失敗時は静かに何もしない */ });
+  });
+
   /* ---------------- 予測実行と描画 ---------------- */
   let lastResults = {};
   window.__runPrediction = runPrediction; // 自動テスト用フック
